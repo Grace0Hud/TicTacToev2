@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">TicTacToe</string>
+    <string name="congrats">CONGRATS!!</string>
+    <string name="winnerName">Player</string>
+    <string name="play_again">Play Again</string>
 </resources>
