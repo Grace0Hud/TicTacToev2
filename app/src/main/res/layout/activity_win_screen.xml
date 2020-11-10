@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/oxfordBlue"
+    android:orientation="vertical"
+    tools:context=".WinScreen">
+
+    <TextView
+        android:id="@+id/congratsTV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:fontFamily="cursive"
+        android:gravity="center"
+        android:text="@string/congrats"
+        android:textColor="@color/teaGreen"
+        android:textStyle="bold"
+        android:textSize="65sp" />
+
+    <TextView
+        android:id="@+id/winnerTV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:gravity="center"
+        android:text="@string/winnerName"
+        android:textColor="@color/teaGreen"
+        android:textSize="70sp"
+        />
+
+    <Button
+        android:id="@+id/playAgainBtn"
+        android:layout_marginTop="340dp"
+        android:layout_marginStart="20dp"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="@string/play_again"
+        android:background="@color/blackCoral"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        />
+
+</LinearLayout>
