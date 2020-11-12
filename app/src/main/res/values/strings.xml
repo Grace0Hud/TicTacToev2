@@ -3,4 +3,7 @@
     <string name="congrats">CONGRATS!!</string>
     <string name="winnerName">Player</string>
     <string name="play_again">Play Again</string>
+    <string name="player_one">Player One</string>
+    <string name="player_two">Player Two</string>
+    <string name="reset_game">Reset Game</string>
 </resources>
