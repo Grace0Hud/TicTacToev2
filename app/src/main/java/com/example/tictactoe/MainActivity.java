@@ -3,8 +3,10 @@ package com.example.tictactoe;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -75,6 +77,11 @@ public class MainActivity extends AppCompatActivity
     {
         tableBtnCLicked(8);
     }//end on btn 08 clicked
+    public void onClickReset(View view)
+    {
+        //just testing that it works
+        Log.i("Test", "---------You clicked the reset button-------------");
+    }//end resetOnClick
 
     //theoretically we should be doing the same thing for every btn in the table
     //To access the array list of btns, we simply check which button was pressed,
