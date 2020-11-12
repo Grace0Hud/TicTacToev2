@@ -42,6 +42,7 @@
         android:background="@color/blackCoral"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
-        />
+        android:layout_marginLeft="20dp"
+        android:onClick="onClickPlayAgainBtn"/>
 
 </LinearLayout>
