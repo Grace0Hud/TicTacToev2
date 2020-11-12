@@ -39,6 +39,58 @@ public class MainActivity extends AppCompatActivity
         btns.add(btn08);
     }//end onCreate method
 
-    
+    public void onClickbtn00(View view)
+    {
+        tableBtnCLicked(0);
+    }//end on btn 00 clicked
+    public void onClickbtn01(View view)
+    {
+        tableBtnCLicked(1);
+    }//end on btn 01 clicked
+    public void onClickbtn02(View view)
+    {
+        tableBtnCLicked(2);
+    }//end on btn 02 clicked
+    public void onClickbtn03(View view)
+    {
+        tableBtnCLicked(3);
+    }//end on btn 03 clicked
+    public void onClickbtn04(View view)
+    {
+        tableBtnCLicked(4);
+    }//end on btn 04 clicked
+    public void onClickbtn05(View view)
+    {
+        tableBtnCLicked(5);
+    }//end on btn 05 clicked
+    public void onClickbtn06(View view)
+    {
+        tableBtnCLicked(6);
+    }//end on btn 06 clicked
+    public void onClickbtn07(View view)
+    {
+        tableBtnCLicked(7);
+    }//end on btn 07 clicked
+    public void onClickbtn08(View view)
+    {
+        tableBtnCLicked(8);
+    }//end on btn 08 clicked
+
+    //theoretically we should be doing the same thing for every btn in the table
+    //To access the array list of btns, we simply check which button was pressed,
+    //then do whatever we want to do with each of the buttons
+    //this saves time copying and individualizing what we want done with each button
+    public void tableBtnCLicked(int btn)
+    {
+        //for example
+        for (int i = 0; i < btns.size(); i++)
+        {
+            if(i == btn)
+            {
+                //not the actual algorithm, just a quick example
+                btns.get(i).setText("X");
+            }
+        }
+    }
 
 }//end MainActivity
