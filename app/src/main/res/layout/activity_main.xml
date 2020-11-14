@@ -74,7 +74,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginLeft="3dp"
         android:layout_marginTop="15dp"
-        android:onClick="onClickbtn00"
+        android:onClick="onClick"
         />
 
     <Button
@@ -86,7 +86,7 @@
         android:textStyle="bold"
         app:layout_constraintTop_toTopOf="@+id/btn_0"
         app:layout_constraintLeft_toRightOf="@+id/btn_0"
-        android:onClick="onClickbtn01"
+        android:onClick="onClick"
         />
 
     <Button
@@ -98,7 +98,7 @@
         android:textStyle="bold"
         app:layout_constraintTop_toTopOf="@+id/btn_1"
         app:layout_constraintLeft_toRightOf="@+id/btn_1"
-        android:onClick="onClickbtn02"
+        android:onClick="onClick"
         />
 
     <Button
@@ -110,7 +110,7 @@
         android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="@+id/btn_0"
         app:layout_constraintLeft_toLeftOf="@+id/btn_0"
-        android:onClick="onClickbtn03"
+        android:onClick="onClick"
         />
 
     <Button
@@ -122,20 +122,19 @@
         android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="@+id/btn_1"
         app:layout_constraintLeft_toLeftOf="@+id/btn_1"
-        android:onClick="onClickbtn04"
+        android:onClick="onClick"
         />
 
     <Button
         android:id="@+id/btn_5"
-        android:layout_height="135dp"
         android:layout_width="135dp"
-        android:textSize="60sp"
+        android:layout_height="135dp"
         android:backgroundTint="@color/teaGreen"
+        android:onClick="onClick"
+        android:textSize="60sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@+id/btn_2"
         app:layout_constraintLeft_toLeftOf="@+id/btn_2"
-        android:onClick="onClickbtn05"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/btn_2" />
 
     <Button
         android:id="@+id/btn_6"
@@ -146,7 +145,7 @@
         android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="@+id/btn_3"
         app:layout_constraintLeft_toLeftOf="@+id/btn_3"
-        android:onClick="onClickbtn06"
+        android:onClick="onClick"
         />
     <Button
         android:id="@+id/btn_7"
@@ -157,7 +156,7 @@
         android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="@+id/btn_4"
         app:layout_constraintLeft_toLeftOf="@+id/btn_4"
-        android:onClick="onClickbtn07"
+        android:onClick="onClick"
         />
 
     <Button
@@ -169,7 +168,7 @@
         android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="@+id/btn_5"
         app:layout_constraintLeft_toLeftOf="@+id/btn_5"
-        android:onClick="onClickbtn08"
+        android:onClick="onClick"
         />
 
     <Button
@@ -186,6 +185,6 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btn_6"
-        android:onClick="onClickReset"/>
+        android:onClick="onClick"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

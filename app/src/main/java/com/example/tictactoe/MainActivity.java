@@ -2,6 +2,7 @@ package com.example.tictactoe;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,7 +29,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
             {0, 3, 6}, {1, 4, 7}, {2, 5, 8}, //columns
             {0, 4, 8}, {2, 4, 6} //diagonal
     };
-
+    int winningScore=1; //score needed for a player to win (should be changed later, it is set to 1 as a test case)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -119,10 +120,20 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
             {
                 playerOneScoreCount++;
                 updatePlayerScore();
-            } else {
+                //buttons need to be reset until ↓ is true
+                if(playerOneScoreCount==winningScore)//checks to see is player 1 has reached the required score to win
+                {
+                    changeScreen();
+                }//end inner if
+            }//end if  player 1's turn
+            else {
                 playerTwoScoreCount++;
                 updatePlayerScore();
-            }
+                if(playerTwoScoreCount==winningScore)//checks to see is player 2 has reached the required score to win
+                {
+                    changeScreen();
+                }   //end inner if
+            }//end else (player 2's turn)
         } else if (roundCount==9) //checks if it results in a tie
         {
             //put play again in here
@@ -136,6 +147,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         boolean winnerResult = false; //autosets the winner to false
         for(int [] winningPosition : winningPositions)
         {
+
             if(board[winningPosition[0]] == board[winningPosition[1]] &&
                     board[winningPosition[1]] == board[winningPosition[2]] &&
                     board[winningPosition[0]] != 2) //goes through and checks after each button is pressed if any of the conditions met in winning positions are true
@@ -152,5 +164,9 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         playerTwoScore.setText(Integer.toString(playerTwoScoreCount));
     }
 
+    public void changeScreen()//changes score after player wins
+    {
+        startActivity(new Intent(MainActivity.this, WinScreen.class));
+    }
 
 }
