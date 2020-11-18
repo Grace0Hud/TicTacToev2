@@ -128,37 +128,16 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
             {
                 playerOneScoreCount++;
                 updatePlayerScore();
-                changeScreen();
-
-                //don't understand why this mechanic is needed or here. I'm jus commenting it out for now.
-                //unless we ask for a limit at the startup of the app - i would assume that the
-                //players would just play until they wanted to reset the score.
-                //buttons need to be reset until ↓ is true
-                /*
-                if(playerOneScoreCount==winningScore)//checks to see is player 1 has reached the required score to win
-                {
-                    changeScreen();
-                }//end inner if
-
-                 */
+                changeScreen("Player 1 WINS!!");
             }//end if  player 1's turn
             else {
                 playerTwoScoreCount++;
                 updatePlayerScore();
-                changeScreen();
-
-                //see explanation above
-                /*
-                if(playerTwoScoreCount==winningScore)//checks to see is player 2 has reached the required score to win
-                {
-                    changeScreen();
-                }   //end inner if
-
-                 */
+                changeScreen("Player 2 WINS!!");
             }//end else (player 2's turn)
         } else if (roundCount==9) //checks if it results in a tie
         {
-            changeScreen();
+            changeScreen("TIE :(");
         } else {
             activePlayer = !activePlayer;
         }
@@ -186,7 +165,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         playerTwoScore.setText(Integer.toString(playerTwoScoreCount));
     }
 
-    public void changeScreen()//changes score after player wins
+    public void changeScreen(String str)//changes screen after player wins
     {
         //opens up a dialogue box instead of a layout for the win screen
         LayoutInflater layoutInflater = LayoutInflater.from(this);
@@ -195,8 +174,10 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
-        //set up reference for winnerTV so that Jaque can do updates
+        //set up reference for winnerTV so that Jaque can do updates - thanks :)
+        setContentView(R.layout.activity_win_screen);
         TextView winnerTv = (TextView) promptView.findViewById(R.id.winnerTV);
+         winnerTv.setText(str);
 
         // set prompts.xml to be the layout file of the alertdialog builder
         alertDialogBuilder.setView(promptView);
