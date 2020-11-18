@@ -68,7 +68,7 @@
         app:layout_constraintRight_toRightOf="parent"
         android:gravity="center_horizontal" />
 
-    <ImageButton
+    <Button
         android:id="@+id/btn_0"
         android:layout_height="135dp"
         android:layout_width="135dp"
@@ -82,7 +82,7 @@
         android:onClick="onClick"
          />
 
-    <ImageButton
+    <Button
         android:id="@+id/btn_1"
         android:layout_height="135dp"
         android:layout_width="135dp"
@@ -94,7 +94,7 @@
         android:onClick="onClick"
         />
 
-    <ImageButton
+    <Button
         android:id="@+id/btn_2"
         android:layout_height="135dp"
         android:layout_width="135dp"
@@ -106,7 +106,7 @@
         android:onClick="onClick"
         />
 
-    <ImageButton
+    <Button
         android:id="@+id/btn_3"
         android:layout_height="135dp"
         android:layout_width="135dp"
@@ -118,7 +118,7 @@
         android:onClick="onClick"
         />
 
-    <ImageButton
+    <Button
         android:id="@+id/btn_4"
         android:layout_height="135dp"
         android:layout_width="135dp"
@@ -130,7 +130,7 @@
         android:onClick="onClick"
         />
 
-    <ImageButton
+    <Button
         android:id="@+id/btn_5"
         android:layout_width="135dp"
         android:layout_height="135dp"
@@ -141,7 +141,7 @@
         app:layout_constraintLeft_toLeftOf="@+id/btn_2"
         app:layout_constraintTop_toBottomOf="@+id/btn_2" />
 
-    <ImageButton
+    <Button
         android:id="@+id/btn_6"
         android:layout_height="135dp"
         android:layout_width="135dp"
@@ -152,7 +152,7 @@
         app:layout_constraintLeft_toLeftOf="@+id/btn_3"
         android:onClick="onClick"
         />
-    <ImageButton
+    <Button
         android:id="@+id/btn_7"
         android:layout_height="135dp"
         android:layout_width="135dp"
@@ -164,7 +164,7 @@
         android:onClick="onClick"
         />
 
-    <ImageButton
+    <Button
         android:id="@+id/btn_8"
         android:layout_height="135dp"
         android:layout_width="135dp"
