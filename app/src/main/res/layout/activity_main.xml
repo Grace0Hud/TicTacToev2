@@ -189,6 +189,6 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btn_6"
-        android:onClick="onClick"/>
+        android:onClick="onClickReset"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

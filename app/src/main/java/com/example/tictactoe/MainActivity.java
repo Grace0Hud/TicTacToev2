@@ -99,6 +99,10 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
 
     }//end MainActivity
 
+    public void onClickReset(View view)
+    {
+        resetScores();
+    }//end reset on click listener
     @Override
     public void onClick(View view) {
         if (!((Button) view).getText().toString().equals("")) {//checks to make sure you are clicking an empty box
@@ -191,15 +195,9 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
+        //set up reference for winnerTV so that Jaque can do updates
         TextView winnerTv = (TextView) promptView.findViewById(R.id.winnerTV);
-        if(playerOneScoreCount == winningScore)
-        {
-            winnerTv.setText("Player 1 Wins!");
-        }
-        else
-        {
-            winnerTv.setText("Player 2 Wins!");
-        }
+
         // set prompts.xml to be the layout file of the alertdialog builder
         alertDialogBuilder.setView(promptView);
 
@@ -215,6 +213,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
                 .setNegativeButton("Reset Scores",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
+                                resetScores();
                                 dialog.cancel();
                             }
                         });
@@ -234,5 +233,13 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         }//end for
         roundCount = 0;
     }//end playAgain
+
+    public void resetScores()
+    {
+        playAgain();
+        playerOneScoreCount = 0;
+        playerTwoScoreCount = 0;
+        updatePlayerScore();
+    }//end reset scores
 
 }
