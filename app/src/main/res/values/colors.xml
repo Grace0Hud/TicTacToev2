@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="oxfordBlue">#011836</color>
-    <color name="blackCoral">#465362</color>
-    <color name="morningBlue">#82A3A1</color>
-    <color name="unbleachedSilk">#FFD8BE</color>
-    <color name="teaGreen">#C0DfA1</color>
+    <color name="scarletLake">#EC1E24</color>
+    <color name="frenchGrey"> #C7C8C9</color>
+    <color name="chestnut">#931916</color>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
 </resources>
