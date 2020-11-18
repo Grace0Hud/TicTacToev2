@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="@color/black">
 
     <TextView
         android:id="@+id/playerOne"
@@ -16,6 +17,7 @@
         android:textSize="30sp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
+        android:textColor="@color/frenchGrey"
         />
     
     <TextView
@@ -27,6 +29,7 @@
         app:layout_constraintTop_toBottomOf="@id/playerOne"
         app:layout_constraintLeft_toLeftOf="@id/playerOne"
         android:layout_marginLeft="65dp"
+        android:textColor="@color/frenchGrey"
         />
 
     <TextView
@@ -39,6 +42,7 @@
         android:textSize="30sp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        android:textColor="@color/frenchGrey"
         />
 
     <TextView
@@ -50,6 +54,7 @@
         app:layout_constraintTop_toBottomOf="@id/playerTwo"
         app:layout_constraintRight_toRightOf="@id/playerTwo"
         android:layout_marginRight="60dp"
+        android:textColor="@color/frenchGrey"
         />
 
     <TextView
@@ -63,12 +68,12 @@
         app:layout_constraintRight_toRightOf="parent"
         android:gravity="center_horizontal" />
 
-    <Button
+    <ImageButton
         android:id="@+id/btn_0"
         android:layout_height="135dp"
         android:layout_width="135dp"
         android:textSize="60sp"
-        android:backgroundTint="@color/teaGreen"
+        android:backgroundTint="@color/chestnut"
         android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="@+id/playerStatus"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -77,94 +82,94 @@
         android:onClick="onClick"
         />
 
-    <Button
+    <ImageButton
         android:id="@+id/btn_1"
         android:layout_height="135dp"
         android:layout_width="135dp"
         android:textSize="60sp"
-        android:backgroundTint="@color/teaGreen"
+        android:backgroundTint="@color/chestnut"
         android:textStyle="bold"
         app:layout_constraintTop_toTopOf="@+id/btn_0"
         app:layout_constraintLeft_toRightOf="@+id/btn_0"
         android:onClick="onClick"
         />
 
-    <Button
+    <ImageButton
         android:id="@+id/btn_2"
         android:layout_height="135dp"
         android:layout_width="135dp"
         android:textSize="60sp"
-        android:backgroundTint="@color/teaGreen"
+        android:backgroundTint="@color/chestnut"
         android:textStyle="bold"
         app:layout_constraintTop_toTopOf="@+id/btn_1"
         app:layout_constraintLeft_toRightOf="@+id/btn_1"
         android:onClick="onClick"
         />
 
-    <Button
+    <ImageButton
         android:id="@+id/btn_3"
         android:layout_height="135dp"
         android:layout_width="135dp"
         android:textSize="60sp"
-        android:backgroundTint="@color/teaGreen"
+        android:backgroundTint="@color/chestnut"
         android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="@+id/btn_0"
         app:layout_constraintLeft_toLeftOf="@+id/btn_0"
         android:onClick="onClick"
         />
 
-    <Button
+    <ImageButton
         android:id="@+id/btn_4"
         android:layout_height="135dp"
         android:layout_width="135dp"
         android:textSize="60sp"
-        android:backgroundTint="@color/teaGreen"
+        android:backgroundTint="@color/chestnut"
         android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="@+id/btn_1"
         app:layout_constraintLeft_toLeftOf="@+id/btn_1"
         android:onClick="onClick"
         />
 
-    <Button
+    <ImageButton
         android:id="@+id/btn_5"
         android:layout_width="135dp"
         android:layout_height="135dp"
-        android:backgroundTint="@color/teaGreen"
+        android:backgroundTint="@color/chestnut"
         android:onClick="onClick"
         android:textSize="60sp"
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="@+id/btn_2"
         app:layout_constraintTop_toBottomOf="@+id/btn_2" />
 
-    <Button
+    <ImageButton
         android:id="@+id/btn_6"
         android:layout_height="135dp"
         android:layout_width="135dp"
         android:textSize="60sp"
-        android:backgroundTint="@color/teaGreen"
+        android:backgroundTint="@color/chestnut"
         android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="@+id/btn_3"
         app:layout_constraintLeft_toLeftOf="@+id/btn_3"
         android:onClick="onClick"
         />
-    <Button
+    <ImageButton
         android:id="@+id/btn_7"
         android:layout_height="135dp"
         android:layout_width="135dp"
         android:textSize="60sp"
-        android:backgroundTint="@color/teaGreen"
+        android:backgroundTint="@color/chestnut"
         android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="@+id/btn_4"
         app:layout_constraintLeft_toLeftOf="@+id/btn_4"
         android:onClick="onClick"
         />
 
-    <Button
+    <ImageButton
         android:id="@+id/btn_8"
         android:layout_height="135dp"
         android:layout_width="135dp"
         android:textSize="60sp"
-        android:backgroundTint="@color/teaGreen"
+        android:backgroundTint="@color/chestnut"
         android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="@+id/btn_5"
         app:layout_constraintLeft_toLeftOf="@+id/btn_5"
@@ -177,8 +182,8 @@
         android:layout_height="60dp"
         android:layout_marginTop="32dp"
         android:text="@string/reset_game"
-        android:backgroundTint="@color/unbleachedSilk"
-        android:textColor="@color/oxfordBlue"
+        android:backgroundTint="@color/darkGrey"
+        android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintHorizontal_bias="0.0"
