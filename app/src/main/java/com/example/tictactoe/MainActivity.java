@@ -109,11 +109,11 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
 
         if (activePlayer){
             ((Button) view).setText("X"); //adds an x to the button
-        ((Button) view).setTextColor(Color.parseColor("#465362")); //changes the color of the x added to button
+        ((Button) view).setTextColor(getResources().getColor(R.color.black)); //changes the color of the x added to button
             board[boardPointer] = 0; //updates which buttons are still on the board & 0 for player one
     } else {
             ((Button)view).setText("O"); //adds an o to the button
-            ((Button)view).setTextColor(Color.parseColor("#82A3A1"));//changes the color of the o added to the button
+            ((Button)view).setTextColor(getResources().getColor(R.color.white));//changes the color of the o added to the button
             board[boardPointer] = 1; //updates which buttons are on the board & 1 for player two
         }
         roundCount++; //increases for check of tie
@@ -170,6 +170,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
 
     public void changeScreen()//changes score after player wins
     {
+        //opens up a dialogue box instead of a layout for the win screen
         LayoutInflater layoutInflater = LayoutInflater.from(this);
 
         View promptView = layoutInflater.inflate(R.layout.activity_win_screen, null);
