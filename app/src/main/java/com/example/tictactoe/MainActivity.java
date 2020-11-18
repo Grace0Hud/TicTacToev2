@@ -124,23 +124,37 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
             {
                 playerOneScoreCount++;
                 updatePlayerScore();
+                changeScreen();
+
+                //don't understand why this mechanic is needed or here. I'm jus commenting it out for now.
+                //unless we ask for a limit at the startup of the app - i would assume that the
+                //players would just play until they wanted to reset the score.
                 //buttons need to be reset until ↓ is true
+                /*
                 if(playerOneScoreCount==winningScore)//checks to see is player 1 has reached the required score to win
                 {
                     changeScreen();
                 }//end inner if
+
+                 */
             }//end if  player 1's turn
             else {
                 playerTwoScoreCount++;
                 updatePlayerScore();
+                changeScreen();
+
+                //see explanation above
+                /*
                 if(playerTwoScoreCount==winningScore)//checks to see is player 2 has reached the required score to win
                 {
                     changeScreen();
                 }   //end inner if
+
+                 */
             }//end else (player 2's turn)
         } else if (roundCount==9) //checks if it results in a tie
         {
-            //put play again in here
+            changeScreen();
         } else {
             activePlayer = !activePlayer;
         }
@@ -177,6 +191,15 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
+        TextView winnerTv = (TextView) promptView.findViewById(R.id.winnerTV);
+        if(playerOneScoreCount == winningScore)
+        {
+            winnerTv.setText("Player 1 Wins!");
+        }
+        else
+        {
+            winnerTv.setText("Player 2 Wins!");
+        }
         // set prompts.xml to be the layout file of the alertdialog builder
         alertDialogBuilder.setView(promptView);
 
@@ -185,10 +208,11 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
                 .setCancelable(false)
                 .setPositiveButton("Play Again", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
+                        playAgain();
                      dialog.cancel();
                     }
                 })
-                .setNegativeButton("Return",
+                .setNegativeButton("Reset Scores",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 dialog.cancel();
@@ -200,5 +224,15 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
 
         alertD.show();
     }
+
+    public void playAgain()
+    {
+        for(int i = 0; i < btns.length; i++)
+        {
+            btns[i].setText("");
+            board[i] = 2;
+        }//end for
+        roundCount = 0;
+    }//end playAgain
 
 }
