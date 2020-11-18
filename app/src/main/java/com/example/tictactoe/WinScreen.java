@@ -17,7 +17,7 @@ public class WinScreen extends AppCompatActivity {
     public void onClickPlayAgainBtn(View view)
     {
         //not yet able to test as we do not yet have a way to navigate between screens
-        Log.i("Test", "-----You clicked the play again btn------");
+       //Log.i("Test", "-----You clicked the play again btn------");
         finish();
     }//end playagain onCLick
 }
