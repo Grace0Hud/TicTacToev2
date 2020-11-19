@@ -175,7 +175,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
         //set up reference for winnerTV so that Jaque can do updates - thanks :)
-        setContentView(R.layout.activity_win_screen);
+        alertDialogBuilder.setView(promptView);
         TextView winnerTv = (TextView) promptView.findViewById(R.id.winnerTV);
          winnerTv.setText(str);
 
@@ -188,7 +188,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
                 .setPositiveButton("Play Again", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         playAgain();
-                     dialog.cancel();
+                     //dialog.cancel();
                     }
                 })
                 .setNegativeButton("Reset Scores",
