@@ -16,6 +16,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements OnClickListener {
@@ -111,6 +113,9 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         String buttonID = view.getResources().getResourceEntryName(view.getId()); //gets the id for a button clicked
         int boardPointer = Integer.parseInt(buttonID.substring(buttonID.length() - 1, buttonID.length())); //gets rid of the button from the grid once clicked
 
+        TextView playerOneDisplay = (TextView)findViewById(R.id.playerOne);
+        TextView playerTwoDisplay = (TextView)findViewById(R.id.playerTwo);
+
         if (activePlayer){
             ((Button) view).setText("X"); //adds an x to the button
         ((Button) view).setTextColor(getResources().getColor(R.color.black)); //changes the color of the x added to button
@@ -118,6 +123,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
     } else {
             ((Button)view).setText("O"); //adds an o to the button
             ((Button)view).setTextColor(getResources().getColor(R.color.white));//changes the color of the o added to the button
+
             board[boardPointer] = 1; //updates which buttons are on the board & 1 for player two
         }
         roundCount++; //increases for check of tie
@@ -140,6 +146,16 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
             changeScreen("TIE :(");
         } else {
             activePlayer = !activePlayer;
+            if(activePlayer)
+            {
+                playerOneDisplay.setTextColor(getResources().getColor(R.color.scarletLake));
+                playerTwoDisplay.setTextColor(getResources().getColor(R.color.frenchGrey));
+            }
+            else
+            {
+                playerTwoDisplay.setTextColor(getResources().getColor(R.color.scarletLake));
+                playerOneDisplay.setTextColor(getResources().getColor(R.color.frenchGrey));
+            }
         }
 
     }
@@ -175,7 +191,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
         //set up reference for winnerTV so that Jaque can do updates - thanks :)
-        setContentView(R.layout.activity_win_screen);
+        alertDialogBuilder.setView(promptView);
         TextView winnerTv = (TextView) promptView.findViewById(R.id.winnerTV);
          winnerTv.setText(str);
 
@@ -188,7 +204,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
                 .setPositiveButton("Play Again", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         playAgain();
-                     dialog.cancel();
+                     //dialog.cancel();
                     }
                 })
                 .setNegativeButton("Reset Scores",

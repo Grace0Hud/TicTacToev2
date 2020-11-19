@@ -17,7 +17,7 @@
         android:textSize="30sp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:textColor="@color/frenchGrey"
+        android:textColor="@color/scarletLake"
         />
     
     <TextView
