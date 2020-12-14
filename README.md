@@ -16,6 +16,6 @@ Our tic-tac-toe game is themed with school colors and includes a pop up dialogue
 After someone wins, the two players can choose to continue their current game, adding on to the points they already have,
 or they can restart and both players will be reset to 0 points. 
 
-*A group project with: *
+*A group project with: @JaquelineGomez and @coliner300*
 
 
