@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="scarletLake">#EC1E24</color>
-    <color name="frenchGrey">#C7C8C9</color>
-    <color name="darkGrey">#a2a2a3</color>
-    <color name="chestnut">#931916</color>
+    <color name="cornflowerBlue">#324376</color>
+    <color name="blueYonder">#586BA4</color>
+    <color name="tangerine">#F68E5F</color>
+    <color name="lightPink">#EDC2BF</color>
+    <color name="ivory">#FFFFEB</color>
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
 </resources>

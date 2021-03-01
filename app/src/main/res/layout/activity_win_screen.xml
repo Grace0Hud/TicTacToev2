@@ -18,7 +18,7 @@
         android:fontFamily="cursive"
         android:gravity="center"
         android:text="@string/congrats"
-        android:textColor="@color/darkGrey"
+        android:textColor="@color/lightPink"
         android:textSize="65sp"
         android:textStyle="bold" />
 
@@ -30,7 +30,7 @@
         android:fontFamily="sans-serif-condensed-medium"
         android:gravity="center"
         android:text="Player"
-        android:textColor="@color/darkGrey"
+        android:textColor="@color/lightPink"
         android:textSize="70sp" />
 
 </LinearLayout>
