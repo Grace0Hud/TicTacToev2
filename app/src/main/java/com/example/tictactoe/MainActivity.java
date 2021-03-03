@@ -47,7 +47,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
 
         resetGame = (Button) findViewById(R.id.resetGame);
 
-        for (int i = 0; i < btns.length; i++) {
+        for (int i = 0; i < btns.length; i++)
+        {
             String buttonID = "btn_" + i;
             int resourceID = getResources().getIdentifier(buttonID, "id", getPackageName());//turns previous String into a R.id.
             btns[i] = (Button) findViewById(resourceID);
@@ -118,11 +119,11 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
 
         if (activePlayer){
             ((Button) view).setText("X"); //adds an x to the button
-        ((Button) view).setTextColor(getResources().getColor(R.color.black)); //changes the color of the x added to button
+        ((Button) view).setTextColor(getResources().getColor(R.color.blueYonder)); //changes the color of the x added to button
             board[boardPointer] = 0; //updates which buttons are still on the board & 0 for player one
     } else {
             ((Button)view).setText("O"); //adds an o to the button
-            ((Button)view).setTextColor(getResources().getColor(R.color.white));//changes the color of the o added to the button
+            ((Button)view).setTextColor(getResources().getColor(R.color.ivory));//changes the color of the o added to the button
 
             board[boardPointer] = 1; //updates which buttons are on the board & 1 for player two
         }
@@ -148,13 +149,13 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
             activePlayer = !activePlayer;
             if(activePlayer)
             {
-                playerOneDisplay.setTextColor(getResources().getColor(R.color.scarletLake));
-                playerTwoDisplay.setTextColor(getResources().getColor(R.color.frenchGrey));
+                playerOneDisplay.setTextColor(getResources().getColor(R.color.ivory));
+                playerTwoDisplay.setTextColor(getResources().getColor(R.color.tangerine));
             }
             else
             {
-                playerTwoDisplay.setTextColor(getResources().getColor(R.color.scarletLake));
-                playerOneDisplay.setTextColor(getResources().getColor(R.color.frenchGrey));
+                playerTwoDisplay.setTextColor(getResources().getColor(R.color.ivory));
+                playerOneDisplay.setTextColor(getResources().getColor(R.color.tangerine));
             }
         }
 
