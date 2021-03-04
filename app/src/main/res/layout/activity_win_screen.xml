@@ -8,20 +8,6 @@
     android:orientation="vertical"
     >
 
-
-
-    <TextView
-        android:id="@+id/congratsTV"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:fontFamily="cursive"
-        android:gravity="center"
-        android:text="@string/congrats"
-        android:textColor="@color/lightPink"
-        android:textSize="65sp"
-        android:textStyle="bold" />
-
     <TextView
         android:id="@+id/winnerTV"
         android:layout_width="match_parent"
