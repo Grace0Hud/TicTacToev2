@@ -21,12 +21,14 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements OnClickListener {
-    private TextView playerOneScore, playerTwoScore, playerStatus;
+    private TextView playerOneScore, playerTwoScore, playerStatus, playerOneDisplay, playerTwoDisplay;
     private Button resetGame;
     //array list btn
     private Button[] btns = new Button[9];
     private int playerOneScoreCount, playerTwoScoreCount, roundCount;
     boolean activePlayer;
+    String buttonID;
+    int boardPointer;
 
     int[] board = {2, 2, 2, 2, 2, 2, 2, 2, 2}; //makes the board set
 
@@ -45,19 +47,25 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         playerTwoScore = (TextView) findViewById(R.id.playerTwoScore);
         playerStatus = (TextView) findViewById(R.id.playerStatus);
 
+        playerOneDisplay = (TextView) findViewById(R.id.playerOne);
+        playerTwoDisplay = (TextView) findViewById(R.id.playerTwo);
+
         resetGame = (Button) findViewById(R.id.resetGame);
 
-        for (int i = 0; i < btns.length; i++) {
+
+        for (int i = 0; i < btns.length; i++)
+        {
             String buttonID = "btn_" + i;
             int resourceID = getResources().getIdentifier(buttonID, "id", getPackageName());//turns previous String into a R.id.
             btns[i] = (Button) findViewById(resourceID);
             btns[i].setOnClickListener(this);
         }
-
+        boardPointer = -1;
+        buttonID = " ";
         roundCount = 0;
         playerOneScoreCount = 0;
         playerTwoScoreCount = 0;
-        activePlayer = true; //changes on which player is going
+        activePlayer = true; //changes on which player is going x =true ; o = false
 
 //        Button btn00 = findViewById(R.id.btn_0);
 //        Button btn01 = findViewById(R.id.btn_1);
@@ -110,25 +118,41 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         if (!((Button) view).getText().toString().equals("")) {//checks to make sure you are clicking an empty box
             return;
         }
-        String buttonID = view.getResources().getResourceEntryName(view.getId()); //gets the id for a button clicked
-        int boardPointer = Integer.parseInt(buttonID.substring(buttonID.length() - 1, buttonID.length())); //gets rid of the button from the grid once clicked
+        buttonID = view.getResources().getResourceEntryName(view.getId()); //gets the id for a button clicked
+        boardPointer = Integer.parseInt(buttonID.substring(buttonID.length() - 1, buttonID.length())); //gets rid of the button from the grid once clicked
 
-        TextView playerOneDisplay = (TextView)findViewById(R.id.playerOne);
-        TextView playerTwoDisplay = (TextView)findViewById(R.id.playerTwo);
 
-        if (activePlayer){
+
+        if (activePlayer) {
             ((Button) view).setText("X"); //adds an x to the button
-        ((Button) view).setTextColor(getResources().getColor(R.color.black)); //changes the color of the x added to button
+            ((Button) view).setTextColor(getResources().getColor(R.color.blueYonder)); //changes the color of the x added to button
             board[boardPointer] = 0; //updates which buttons are still on the board & 0 for player one
-    } else {
-            ((Button)view).setText("O"); //adds an o to the button
-            ((Button)view).setTextColor(getResources().getColor(R.color.white));//changes the color of the o added to the button
+        } else {
+            ((Button) view).setText("O"); //adds an o to the button
+            ((Button) view).setTextColor(getResources().getColor(R.color.ivory));//changes the color of the o added to the button
 
             board[boardPointer] = 1; //updates which buttons are on the board & 1 for player two
         }
         roundCount++; //increases for check of tie
+        checkWinner();
+    }
 
-        if(checkWinner())
+
+
+    public void checkWinner()
+    {
+        boolean winnerResult = false; //autosets the winner to false
+        for(int [] winningPosition : winningPositions)
+        {
+
+            if(board[winningPosition[0]] == board[winningPosition[1]] &&
+                    board[winningPosition[1]] == board[winningPosition[2]] &&
+                    board[winningPosition[0]] != 2) //goes through and checks after each button is pressed if any of the conditions met in winning positions are true
+            {
+                winnerResult = true; //if the conditions are met, then it sets the winner to true
+            }
+        }
+        if(winnerResult)
         {
             if(activePlayer)
             {
@@ -148,31 +172,16 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
             activePlayer = !activePlayer;
             if(activePlayer)
             {
-                playerOneDisplay.setTextColor(getResources().getColor(R.color.scarletLake));
-                playerTwoDisplay.setTextColor(getResources().getColor(R.color.frenchGrey));
+                playerOneDisplay.setTextColor(getResources().getColor(R.color.ivory));
+                playerTwoDisplay.setTextColor(getResources().getColor(R.color.tangerine));
             }
             else
             {
-                playerTwoDisplay.setTextColor(getResources().getColor(R.color.scarletLake));
-                playerOneDisplay.setTextColor(getResources().getColor(R.color.frenchGrey));
+                playerTwoDisplay.setTextColor(getResources().getColor(R.color.ivory));
+                playerOneDisplay.setTextColor(getResources().getColor(R.color.tangerine));
             }
         }
 
-    }
-    public boolean checkWinner()
-    {
-        boolean winnerResult = false; //autosets the winner to false
-        for(int [] winningPosition : winningPositions)
-        {
-
-            if(board[winningPosition[0]] == board[winningPosition[1]] &&
-                    board[winningPosition[1]] == board[winningPosition[2]] &&
-                    board[winningPosition[0]] != 2) //goes through and checks after each button is pressed if any of the conditions met in winning positions are true
-            {
-                winnerResult = true; //if the conditions are met, then it sets the winner to true
-            }
-        }
-        return winnerResult;//returns the boolean
     }
 
     public void updatePlayerScore()
@@ -193,7 +202,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         //set up reference for winnerTV so that Jaque can do updates - thanks :)
         alertDialogBuilder.setView(promptView);
         TextView winnerTv = (TextView) promptView.findViewById(R.id.winnerTV);
-         winnerTv.setText(str);
+        winnerTv.setText(str);
 
         // set prompts.xml to be the layout file of the alertdialog builder
         alertDialogBuilder.setView(promptView);
@@ -204,7 +213,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
                 .setPositiveButton("Play Again", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         playAgain();
-                     //dialog.cancel();
+                        //dialog.cancel();
                     }
                 })
                 .setNegativeButton("Reset Scores",
@@ -219,6 +228,12 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         AlertDialog alertD = alertDialogBuilder.create();
 
         alertD.show();
+    }
+    public int blockOpponent()
+    {
+        int boardPosition = 0;
+
+        return  boardPosition;
     }
 
     public void playAgain()
