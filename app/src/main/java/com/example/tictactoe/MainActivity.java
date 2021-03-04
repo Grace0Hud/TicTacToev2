@@ -60,76 +60,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         playerTwoScoreCount = 0;
         activePlayer = true; //changes on which player is going
 
-//        Button btn00 = findViewById(R.id.btn_0);
-//        Button btn01 = findViewById(R.id.btn_1);
-//        Button btn02 = findViewById(R.id.btn_2);
-//        Button btn03 = findViewById(R.id.btn_3);
-//        Button btn04 = findViewById(R.id.btn_4);
-//        Button btn05 = findViewById(R.id.btn_5);
-//        Button btn06 = findViewById(R.id.btn_6);
-//        Button btn07 = findViewById(R.id.btn_7);
-//        Button btn08 = findViewById(R.id.btn_8);
-//
-//        btns.add(btn00);
-//        btns.add(btn01);
-//        btns.add(btn02);
-//        btns.add(btn03);
-//        btns.add(btn04);
-//        btns.add(btn05);
-//        btns.add(btn06);
-//        btns.add(btn07);
-//        btns.add(btn08);
-//    }//end onCreate method
-//
-
-
-        //theoretically we should be doing the same thing for every btn in the table
-        //To access the array list of btns, we simply check which button was pressed,
-        //then do whatever we want to do with each of the buttons
-        //this saves time copying and individualizing what we want done with each button
-//    public void tableBtnCLicked(int btn)
-//    {
-//        //for example
-//        for (int i = 0; i < btns.size(); i++)
-//        {
-//            if(i == btn)
-//            {
-//                //not the actual algorithm, just a quick example
-//                btns.get(i).setText("X");
-//            }
-//        }
-//    }
-
-    }//end MainActivity
-
-    public void onClickReset(View view)
-    {
-        resetScores();
-    }//end reset on click listener
-    @Override
-    public void onClick(View view) {
-        if (!((Button) view).getText().toString().equals("")) {//checks to make sure you are clicking an empty box
-            return;
-        }
-        String buttonID = view.getResources().getResourceEntryName(view.getId()); //gets the id for a button clicked
-        int boardPointer = Integer.parseInt(buttonID.substring(buttonID.length() - 1, buttonID.length())); //gets rid of the button from the grid once clicked
-
-        TextView playerOneDisplay = (TextView)findViewById(R.id.playerOne);
-        TextView playerTwoDisplay = (TextView)findViewById(R.id.playerTwo);
-
-        if (activePlayer){
-            ((Button) view).setText("X"); //adds an x to the button
-        ((Button) view).setTextColor(getResources().getColor(R.color.blueYonder)); //changes the color of the x added to button
-            board[boardPointer] = 0; //updates which buttons are still on the board & 0 for player one
-    } else {
-            ((Button)view).setText("O"); //adds an o to the button
-            ((Button)view).setTextColor(getResources().getColor(R.color.ivory));//changes the color of the o added to the button
-
-            board[boardPointer] = 1; //updates which buttons are on the board & 1 for player two
-        }
-        roundCount++; //increases for check of tie
-
-        if(checkWinner())
+        /*
+          if(checkWinner())
         {
             if(activePlayer)
             {
@@ -145,7 +77,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         } else if (roundCount==9) //checks if it results in a tie
         {
             changeScreen("TIE :(");
-        } else {
+        } else
+        {
             activePlayer = !activePlayer;
             if(activePlayer)
             {
@@ -158,7 +91,72 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
                 playerOneDisplay.setTextColor(getResources().getColor(R.color.tangerine));
             }
         }
+         */
 
+    }//end MainActivity
+
+    public void onClickReset(View view)
+    {
+        resetScores();
+    }//end reset on click listener
+    @Override
+    public void onClick(View view) {
+        if (!((Button) view).getText().toString().equals("")) {//checks to make sure you are clicking an empty box
+            return;
+        }
+        String buttonID = view.getResources().getResourceEntryName(view.getId()); //gets the id for a button clicked
+        int boardPointer = Integer.parseInt(buttonID.substring(buttonID.length() - 1, buttonID.length())); //gets rid of the button from the grid once clicked
+
+        if (activePlayer){
+            ((Button) view).setText("X"); //adds an x to the button
+        ((Button) view).setTextColor(getResources().getColor(R.color.blueYonder)); //changes the color of the x added to button
+            board[boardPointer] = 0; //updates which buttons are still on the board & 0 for player one
+    } else {
+            ((Button)view).setText("O"); //adds an o to the button
+            ((Button)view).setTextColor(getResources().getColor(R.color.ivory));//changes the color of the o added to the button
+
+            board[boardPointer] = 1; //updates which buttons are on the board & 1 for player two
+        }
+        roundCount++; //increases for check of tie
+
+        TextView playerOneDisplay = (TextView)findViewById(R.id.playerOne);
+        TextView playerTwoDisplay = (TextView)findViewById(R.id.playerTwo);
+        if(activePlayer)
+        {
+            winOrSwitch(playerOneDisplay, playerTwoDisplay,  1);
+        }
+        else
+        {
+            winOrSwitch(playerTwoDisplay, playerOneDisplay,  2);
+        }
+
+
+    }//end on click
+    public void winOrSwitch(TextView display, TextView otherDisplay,  int player)
+    {
+        //checks if someone has won, then updates
+        if(checkWinner())
+        {
+            if(player == 1)
+            {
+                playerOneScoreCount++;
+            }
+            else
+            {
+                playerTwoScoreCount++;
+            }
+            updatePlayerScore();
+            changeScreen("Player " + player + " WINS!");
+        } else if (roundCount==9) //checks if it results in a tie
+        {
+            changeScreen("TIE :(");
+        } else
+        {
+            //switches which player + color display
+            activePlayer = !activePlayer;
+                display.setTextColor(getResources().getColor(R.color.ivory));
+                otherDisplay.setTextColor(getResources().getColor(R.color.tangerine));
+        }
     }
     public boolean checkWinner()
     {
