@@ -25,17 +25,19 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
     private Button resetGame;
     //array list btn
     private Button[] btns = new Button[9];
-    private int playerOneScoreCount, playerTwoScoreCount, roundCount;
-    boolean activePlayer;
+    private int playerOneScoreCount, playerTwoScoreCount, roundCount, togetherTeam, placement;
+    boolean activePlayer, cpu;//true = x; false = o
+    static boolean singlePlayer;
 
-    int[] board = {2, 2, 2, 2, 2, 2, 2, 2, 2}; //makes the board set
+
+    int[] board = {2, 2, 2, 2, 2, 2, 2, 2, 2}; //makes the board set; 0 for player one & 1 for player two
 
     int[][] winningPositions = { //shows all winning positions on the grid
             {0, 1, 2}, {3, 4, 5,}, {6, 7, 8}, //rows
             {0, 3, 6}, {1, 4, 7}, {2, 5, 8}, //columns
             {0, 4, 8}, {2, 4, 6} //diagonal
     };
-    int winningScore=1; //score needed for a player to win (should be changed later, it is set to 1 as a test case)
+    int winningScore = 1 ;  //score needed for a player to win (should be changed later, it is set to 1 as a test case)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         playerOneScore = (TextView) findViewById(R.id.playerOneScore);
         playerTwoScore = (TextView) findViewById(R.id.playerTwoScore);
         playerStatus = (TextView) findViewById(R.id.playerStatus);
+        togetherTeam = 2;
 
         resetGame = (Button) findViewById(R.id.resetGame);
 
@@ -59,6 +62,32 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         playerOneScoreCount = 0;
         playerTwoScoreCount = 0;
         activePlayer = true; //changes on which player is going
+        singlePlayer = false;
+//        if(singlePlayer)
+//        {
+////            //randomizing cpu
+////            double ran =  Math.random() * 10;
+////            if(ran < 5)
+////            {
+////                cpu = true; // cpu = x
+////            }
+////            else
+////                cpu = false; //cpu = o
+//            if (activePlayer) {
+//                if (cpu) {
+//                    btns[placeCpu()].setText("X");
+//
+//                }
+//
+//            }
+//            else if(!activePlayer)
+//            {
+//                if(!cpu)
+//                {
+//                    btns[placeCpu()].setText("X");
+//                }
+//            }
+//        }
 
         /*
           if(checkWinner())
@@ -101,13 +130,19 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
     }//end reset on click listener
     @Override
     public void onClick(View view) {
+
         if (!((Button) view).getText().toString().equals("")) {//checks to make sure you are clicking an empty box
             return;
         }
         String buttonID = view.getResources().getResourceEntryName(view.getId()); //gets the id for a button clicked
-        int boardPointer = Integer.parseInt(buttonID.substring(buttonID.length() - 1, buttonID.length())); //gets rid of the button from the grid once clicked
+        int boardPointer = Integer.parseInt(buttonID.substring(buttonID.length() - 1)); //gets rid of the button from the grid once clicked
 
         if (activePlayer){
+            if(singlePlayer && cpu)
+            {
+                btns[placeCpu()].setText("X");
+
+            }
             ((Button) view).setText("X"); //adds an x to the button
         ((Button) view).setTextColor(getResources().getColor(R.color.blueYonder)); //changes the color of the x added to button
             board[boardPointer] = 0; //updates which buttons are still on the board & 0 for player one
@@ -129,10 +164,45 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         {
             winOrSwitch(playerTwoDisplay, playerOneDisplay,  2);
         }
+        if(singlePlayer)
+        {
+            ((Button)btns[placeCpu()]).setText("X");
+        }
 
 
     }//end on click
-    public void winOrSwitch(TextView display, TextView otherDisplay,  int player)
+    //getters and setters for testing
+    public static void setSinglePlayer(Boolean single) //can be tested once testing is figures out
+    {
+        singlePlayer = single;
+        System.out.println("single bool is" + singlePlayer);
+    }
+
+
+    public int getPlayerOneScoreCount() {
+        return playerOneScoreCount;
+    }
+
+    public void setPlayerOneScoreCount(int playerOneScoreCount) {
+        this.playerOneScoreCount = playerOneScoreCount;
+    }
+    public void setTogetherTeam(int togetherTeam) {
+        this.togetherTeam = togetherTeam;
+    }
+    public int getTogetherTeam()
+    {
+        return togetherTeam;
+    }
+
+    public int getPlayerTwoScoreCount() {
+        return playerTwoScoreCount;
+    }
+
+    public void setPlayerTwoScoreCount(int playerTwoScoreCount) {
+        this.playerTwoScoreCount = playerTwoScoreCount;
+    }
+
+    public void winOrSwitch(TextView display, TextView otherDisplay, int player)
     {
         //checks if someone has won, then updates
         if(checkWinner())
@@ -161,17 +231,47 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
     public boolean checkWinner()
     {
         boolean winnerResult = false; //autosets the winner to false
-        for(int [] winningPosition : winningPositions)
+        if (checkSpotsTogether() == 3)
         {
-
-            if(board[winningPosition[0]] == board[winningPosition[1]] &&
-                    board[winningPosition[1]] == board[winningPosition[2]] &&
-                    board[winningPosition[0]] != 2) //goes through and checks after each button is pressed if any of the conditions met in winning positions are true
-            {
-                winnerResult = true; //if the conditions are met, then it sets the winner to true
-            }
+            winnerResult = true;
         }
         return winnerResult;//returns the boolean
+    }
+    //checking how many spaces are equal to one player
+    public int checkSpotsTogether()
+    {
+        int spaces = 0;
+        for(int[] winningPosition : winningPositions)
+        {
+
+            if(board[winningPosition[0]] == board[winningPosition[1]] && board[winningPosition[0]] != 2)
+            {
+
+                if(board[winningPosition[0]] == board[winningPosition[1]] &&
+                        board[winningPosition[1]] == board[winningPosition[2]] &&
+                        board[winningPosition[0]] != 2)
+                {
+                   spaces = 3;
+                }
+                else {
+                    if (board[winningPosition[0]] == 1) {
+                        setTogetherTeam(1);
+                    }
+                    else {
+                        setTogetherTeam(0);
+                    }
+                    spaces = 2;
+                    placement = winningPosition[2];
+                }
+            }
+
+        }
+        return spaces;
+    }
+
+    public int getPlacement()
+    {
+        return placement;
     }
 
     public void updatePlayerScore()
@@ -232,10 +332,46 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
 
     public void resetScores()
     {
-        playAgain();
+        //playAgain();
         playerOneScoreCount = 0;
         playerTwoScoreCount = 0;
         updatePlayerScore();
     }//end reset scores
+    //place cpu method, to  attempt to figure out the best placement to win against opponent
+    public int placeCpu()
+    {
+        int place = -1;
+        int together = checkSpotsTogether();
+        int avalible[] = {9};
+        int count = 0;
+        boolean stop = false;
+        if(together == 2 && togetherTeam == 0 && !cpu) {
+            place = getPlacement();
+        }
+        else
+        {
+            for(int i = 0; i < board.length; i++)
+            {
+                if(board[i] == 2)
+                {
+                    avalible[count] = board[i];
+                    count++;
+                }
+            }
+            count = 0;
+            while(!stop)
+            {
+                place = board[count];
+                count++;
+                if(Math.random()*10 > 7 && board[count] != 0)
+                {
+                    stop = true;
+                }
+            }
+        }
+        return place;
+    }
+
+
 
 }
