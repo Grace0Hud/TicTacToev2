@@ -62,7 +62,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         playerOneScoreCount = 0;
         playerTwoScoreCount = 0;
         activePlayer = true; //changes on which player is going
-        singlePlayer = false;
+        singlePlayer = getIntent().getBooleanExtra("singlePlayer", false);
+
 //        if(singlePlayer)
 //        {
 ////            //randomizing cpu
@@ -138,14 +139,11 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         int boardPointer = Integer.parseInt(buttonID.substring(buttonID.length() - 1)); //gets rid of the button from the grid once clicked
 
         if (activePlayer){
-            if(singlePlayer && cpu)
-            {
-                btns[placeCpu()].setText("X");
-
-            }
             ((Button) view).setText("X"); //adds an x to the button
         ((Button) view).setTextColor(getResources().getColor(R.color.blueYonder)); //changes the color of the x added to button
             board[boardPointer] = 0; //updates which buttons are still on the board & 0 for player one
+
+
     } else {
             ((Button)view).setText("O"); //adds an o to the button
             ((Button)view).setTextColor(getResources().getColor(R.color.ivory));//changes the color of the o added to the button
@@ -164,10 +162,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         {
             winOrSwitch(playerTwoDisplay, playerOneDisplay,  2);
         }
-        if(singlePlayer)
-        {
-            ((Button)btns[placeCpu()]).setText("X");
-        }
+
 
 
     }//end on click
@@ -223,7 +218,12 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         } else
         {
             //switches which player + color display
-            activePlayer = !activePlayer;
+
+                activePlayer = !activePlayer;
+                if(singlePlayer && activePlayer == false)
+                {
+                    placeCpu();
+                }
                 display.setTextColor(getResources().getColor(R.color.ivory));
                 otherDisplay.setTextColor(getResources().getColor(R.color.tangerine));
         }
@@ -336,41 +336,59 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         playerOneScoreCount = 0;
         playerTwoScoreCount = 0;
         updatePlayerScore();
+        playAgain();
     }//end reset scores
     //place cpu method, to  attempt to figure out the best placement to win against opponent
-    public int placeCpu()
+    public void placeCpu()
     {
-        int place = -1;
-        int together = checkSpotsTogether();
-        int avalible[] = {9};
-        int count = 0;
-        boolean stop = false;
-        if(together == 2 && togetherTeam == 0 && !cpu) {
-            place = getPlacement();
-        }
-        else
+        boolean placed = false;
+        int place = (int)(Math.random()*10 - 1);
+        while(!placed)
         {
-            for(int i = 0; i < board.length; i++)
+            if(board[place] == 2)
             {
-                if(board[i] == 2)
-                {
-                    avalible[count] = board[i];
-                    count++;
-                }
+                btns[place].performClick();
+               // board[place] = 1;
+                placed = true;
             }
-            count = 0;
-            while(!stop)
+            else
             {
-                place = board[count];
-                count++;
-                if(Math.random()*10 > 7 && board[count] != 0)
-                {
-                    stop = true;
-                }
+                place = (int)(Math.random()*10 - 1);
             }
         }
-        return place;
-    }
+
+//        int place = -1;
+//        int together = checkSpotsTogether();
+//        int avalible[] = {9};
+//        int count = 0;
+//        boolean stop = false;
+//        if(together == 2 && togetherTeam == 0 && !cpu) {
+//            place = getPlacement();
+//        }
+//        else
+//        {
+//            for(int i = 0; i < board.length; i++)
+//            {
+//                if(board[i] == 2)
+//                {
+//                    avalible[count] = board[i];
+//                    count++;
+//                }
+//            }
+//            count = 0;
+//            while(!stop)
+//            {
+//                place = board[count];
+//                count++;
+//                if(Math.random()*10 > 7 && board[count] != 0)
+//                {
+//                    stop = true;
+//                }
+//            }
+//        }
+//        activePlayer = false;
+//        btns[place].performClick();
+  }
 
 
 
