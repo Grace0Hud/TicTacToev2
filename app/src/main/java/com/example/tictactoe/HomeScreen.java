@@ -22,6 +22,7 @@ public class HomeScreen extends AppCompatActivity {
         singlePLayerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 openMainActivty();
             }
         });
@@ -45,11 +46,12 @@ public class HomeScreen extends AppCompatActivity {
 
     public void openMainActivty() {
         Intent intent = new Intent(this, MainActivity.class);
-        MainActivity.setSinglePlayer(true); // boolean in main activity
+        intent.putExtra("singlePlayer", true);
         startActivity(intent);
     }
     public void openTwoPlayerMainAct() {
         Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("singlePlayer", false);
         startActivity(intent);
     }
 
