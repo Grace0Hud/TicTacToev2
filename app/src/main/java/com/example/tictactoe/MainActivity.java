@@ -231,42 +231,17 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
     public boolean checkWinner()
     {
         boolean winnerResult = false; //autosets the winner to false
-        if (checkSpotsTogether() == 3)
+        for(int [] winningPosition : winningPositions)
         {
-            winnerResult = true;
+
+            if(board[winningPosition[0]] == board[winningPosition[1]] &&
+                    board[winningPosition[1]] == board[winningPosition[2]] &&
+                    board[winningPosition[0]] != 2) //goes through and checks after each button is pressed if any of the conditions met in winning positions are true
+            {
+                winnerResult = true; //if the conditions are met, then it sets the winner to true
+            }
         }
         return winnerResult;//returns the boolean
-    }
-    //checking how many spaces are equal to one player
-    public int checkSpotsTogether()
-    {
-        int spaces = 0;
-        for(int[] winningPosition : winningPositions)
-        {
-
-            if(board[winningPosition[0]] == board[winningPosition[1]] && board[winningPosition[0]] != 2)
-            {
-
-                if(board[winningPosition[0]] == board[winningPosition[1]] &&
-                        board[winningPosition[1]] == board[winningPosition[2]] &&
-                        board[winningPosition[0]] != 2)
-                {
-                   spaces = 3;
-                }
-                else {
-                    if (board[winningPosition[0]] == 1) {
-                        setTogetherTeam(1);
-                    }
-                    else {
-                        setTogetherTeam(0);
-                    }
-                    spaces = 2;
-                    placement = winningPosition[2];
-                }
-            }
-
-        }
-        return spaces;
     }
 
     public int getPlacement()
