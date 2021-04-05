@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
     //array list btn
     private Button[] btns = new Button[9];
     private int playerOneScoreCount, playerTwoScoreCount, roundCount, togetherTeam, placement;
-    boolean activePlayer, cpu;//true = x; false = o
+    boolean activePlayer, twoInRow, cpu;//true = x; false = o
     static boolean singlePlayer;
 
 
@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         playerTwoScore = (TextView) findViewById(R.id.playerTwoScore);
         playerStatus = (TextView) findViewById(R.id.playerStatus);
         togetherTeam = 2;
-
+        twoInRow = false;
         resetGame = (Button) findViewById(R.id.resetGame);
 
         for (int i = 0; i < btns.length; i++)
@@ -240,6 +240,27 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
             {
                 winnerResult = true; //if the conditions are met, then it sets the winner to true
             }
+            else if((board[winningPosition[0]] == board[winningPosition[1]])
+                            && board[winningPosition[0]] != 2)
+            {
+                togetherTeam = board[winningPosition[0]];
+                placement = board[winningPosition[2]];
+                twoInRow = true;
+            }
+            else if((board[winningPosition[1]] == board[winningPosition[2]] )
+                    && board[winningPosition[0]] != 2)
+            {
+                togetherTeam = board[winningPosition[1]];
+                placement = board[winningPosition[0]];
+                twoInRow = true;
+            }
+            else if((board[winningPosition[0]] == board[winningPosition[2]] )
+                    && board[winningPosition[0]] != 2)
+            {
+                togetherTeam = board[winningPosition[0]];
+                placement = board[winningPosition[1]];
+                twoInRow = true;
+            }
         }
         return winnerResult;//returns the boolean
     }
@@ -297,6 +318,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
 
     public void playAgain()
     {
+        activePlayer = true;
         for(int i = 0; i < btns.length; i++)
         {
             btns[i].setText("");
@@ -318,9 +340,21 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
     {
         boolean placed = false;
         int place = (int)(Math.random()*10 - 1);
+        if(board[placement] !=2)
+        {
+            twoInRow = false;
+        }
         while(!placed)
         {
-            if(board[place] == 2)
+            if(twoInRow)
+            {
+
+                place = placement;
+                btns[place].performClick();
+                placed = true;
+                twoInRow = false;
+            }
+            else if(board[place] == 2)
             {
                 btns[place].performClick();
                // board[place] = 1;
