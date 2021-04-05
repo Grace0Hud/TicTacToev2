@@ -10,7 +10,7 @@ import android.widget.Button;
 public class HomeScreen extends AppCompatActivity {
 
     private Button singlePLayerButton;
-//    private Button multiPlayerButton;
+    private Button multiPlayerButton;
     private Button infoButton;
 
     @Override
@@ -26,6 +26,14 @@ public class HomeScreen extends AppCompatActivity {
             }
         });
 
+        multiPlayerButton = (Button) findViewById(R.id.multiPlayerButton);
+        multiPlayerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openTwoPlayerMainAct();
+            }
+        });
+
         infoButton = (Button) findViewById(R.id.infoButton);
         infoButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -36,6 +44,11 @@ public class HomeScreen extends AppCompatActivity {
     }
 
     public void openMainActivty() {
+        Intent intent = new Intent(this, MainActivity.class);
+        MainActivity.setSinglePlayer(true); // boolean in main activity
+        startActivity(intent);
+    }
+    public void openTwoPlayerMainAct() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
