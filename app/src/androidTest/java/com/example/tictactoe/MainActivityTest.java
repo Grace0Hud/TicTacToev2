@@ -1,62 +1,50 @@
 package com.example.tictactoe;
 
-import junit.framework.TestCase;
-import junit.framework.TestResult;
+import android.os.Looper;
 
-import static org.junit.Assert.assertArrayEquals;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+
+import junit.framework.TestCase;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+@RunWith(AndroidJUnit4.class)
 
 public class MainActivityTest extends TestCase {
 
-    public void testCheckWinner()
+    @Test
+    public void playerOneCountGetnSet()
     {
-        /*
-        MainActivity test = new MainActivity();
-        int[][] board = {{0,0,0},{0,2,2},{0,1,1}};
-        //array after move {0,0,0},{0,2,2},{1,1,1}
-        assertArrayEquals(new int[] {2,0},test.checkWinner(board));
-        */
-
-        /*
-        MainActivity test = new MainActivity();
-        int[][] board = {{0,1,0},{1,1,2},{0,2,2}};
-        //arr   ay after move {0,1,1},{1,1,2},{0,2,2}
-        //available spaces: {0,0} {0,2} {2,0}
-        assertArrayEquals(new int[] {0,0},test.checkWinner(board)); // or {2,0}
-        */
+        MainActivity.setPlayerOneScoreCount(4);
+       int expected = 4;
+       assertEquals(expected,  MainActivity.getPlayerOneScoreCount());
     }
-
-    public void testUpdatePlayerScore()
+    @Test
+    public void playerTwoCountGetnSet()
     {
-
+        MainActivity.setPlayerTwoScoreCount(4);
+        int expected = 4;
+        assertEquals(expected, MainActivity.getPlayerTwoScoreCount());
     }
 
-    public void testChangeScreen() {
-    }
-
-    public void testPlayAgain() {
-        /*
-        MainActivity tests = new MainActivity();
-        tests.resetScores("0");
-        String expected = "0";
-        assertEquals(expected, MainActivity.resetScores());
-        */
-    }
-
-    public void testResetScores()
+    @Test
+    public void resetPlayerOneScore()
     {
-        /*
-        MainActivity tests = new MainActivity();
-        tests.resetScores("0");
-        String expected = "0";
-        assertEquals(expected, MainActivity.resetScores());
-        */
-
-        MainActivity test = new MainActivity();
-        // Check a positive
-        System.out.println(test.updatePlayerScore());
-        // Check a negative
-        System.out.println(test.updatePlayerScore());
-        // Check a positive
-        System.out.println(test.updatePlayerScore());
+       MainActivity.setPlayerOneScoreCount(4);
+       int expected = 0;
+       MainActivity.reset();
+       assertEquals(expected, MainActivity.getPlayerOneScoreCount());
     }
+
+    @Test
+    public void resetPlayerTwoScore()
+    {
+        MainActivity.setPlayerTwoScoreCount(4);
+        int expected = 0;
+        MainActivity.reset();
+        assertEquals(expected, MainActivity.getPlayerTwoScoreCount());
+    }
+
+
 }

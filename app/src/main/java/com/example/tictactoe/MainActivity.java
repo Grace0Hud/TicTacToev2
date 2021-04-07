@@ -4,38 +4,31 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements OnClickListener {
-    private TextView playerOneScore, playerTwoScore, playerStatus;
+    private static TextView playerOneScore, playerTwoScore, playerStatus;
     private Button resetGame;
     //array list btn
     private Button[] btns = new Button[9];
-    public int playerOneScoreCount, playerTwoScoreCount, roundCount;
-    boolean activePlayer;
+    private static int playerOneScoreCount, playerTwoScoreCount, roundCount, togetherTeam, placement;
+    boolean activePlayer, twoInRow, cpu;//true = x; false = o
+    static boolean singlePlayer;
 
-    int[] board = {2, 2, 2, 2, 2, 2, 2, 2, 2}; //makes the board set
+
+    int[] board = {2, 2, 2, 2, 2, 2, 2, 2, 2}; //makes the board set; 0 for player one & 1 for player two
 
     int[][] winningPositions = { //shows all winning positions on the grid
             {0, 1, 2}, {3, 4, 5,}, {6, 7, 8}, //rows
             {0, 3, 6}, {1, 4, 7}, {2, 5, 8}, //columns
             {0, 4, 8}, {2, 4, 6} //diagonal
     };
-    int winningScore=1; //score needed for a player to win (should be changed later, it is set to 1 as a test case)
+    int winningScore = 1 ;  //score needed for a player to win (should be changed later, it is set to 1 as a test case)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +37,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         playerOneScore = (TextView) findViewById(R.id.playerOneScore);
         playerTwoScore = (TextView) findViewById(R.id.playerTwoScore);
         playerStatus = (TextView) findViewById(R.id.playerStatus);
-
+        togetherTeam = 2;
+        twoInRow = false;
         resetGame = (Button) findViewById(R.id.resetGame);
 
         for (int i = 0; i < btns.length; i++)
@@ -56,80 +50,38 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         }
 
         roundCount = 0;
-        playerOneScoreCount = 0;
-        playerTwoScoreCount = 0;
+        reset();
         activePlayer = true; //changes on which player is going
+        singlePlayer = getIntent().getBooleanExtra("singlePlayer", false);
 
-//        Button btn00 = findViewById(R.id.btn_0);
-//        Button btn01 = findViewById(R.id.btn_1);
-//        Button btn02 = findViewById(R.id.btn_2);
-//        Button btn03 = findViewById(R.id.btn_3);
-//        Button btn04 = findViewById(R.id.btn_4);
-//        Button btn05 = findViewById(R.id.btn_5);
-//        Button btn06 = findViewById(R.id.btn_6);
-//        Button btn07 = findViewById(R.id.btn_7);
-//        Button btn08 = findViewById(R.id.btn_8);
-//
-//        btns.add(btn00);
-//        btns.add(btn01);
-//        btns.add(btn02);
-//        btns.add(btn03);
-//        btns.add(btn04);
-//        btns.add(btn05);
-//        btns.add(btn06);
-//        btns.add(btn07);
-//        btns.add(btn08);
-//    }//end onCreate method
-//
-
-
-        //theoretically we should be doing the same thing for every btn in the table
-        //To access the array list of btns, we simply check which button was pressed,
-        //then do whatever we want to do with each of the buttons
-        //this saves time copying and individualizing what we want done with each button
-//    public void tableBtnCLicked(int btn)
-//    {
-//        //for example
-//        for (int i = 0; i < btns.size(); i++)
+//        if(singlePlayer)
 //        {
-//            if(i == btn)
+////            //randomizing cpu
+////            double ran =  Math.random() * 10;
+////            if(ran < 5)
+////            {
+////                cpu = true; // cpu = x
+////            }
+////            else
+////                cpu = false; //cpu = o
+//            if (activePlayer) {
+//                if (cpu) {
+//                    btns[placeCpu()].setText("X");
+//
+//                }
+//
+//            }
+//            else if(!activePlayer)
 //            {
-//                //not the actual algorithm, just a quick example
-//                btns.get(i).setText("X");
+//                if(!cpu)
+//                {
+//                    btns[placeCpu()].setText("X");
+//                }
 //            }
 //        }
-//    }
 
-    }//end MainActivity
-
-    public void onClickReset(View view)
-    {
-        resetScores();
-    }//end reset on click listener
-    @Override
-    public void onClick(View view) {
-        if (!((Button) view).getText().toString().equals("")) {//checks to make sure you are clicking an empty box
-            return;
-        }
-        String buttonID = view.getResources().getResourceEntryName(view.getId()); //gets the id for a button clicked
-        int boardPointer = Integer.parseInt(buttonID.substring(buttonID.length() - 1, buttonID.length())); //gets rid of the button from the grid once clicked
-
-        TextView playerOneDisplay = (TextView)findViewById(R.id.playerOne);
-        TextView playerTwoDisplay = (TextView)findViewById(R.id.playerTwo);
-
-        if (activePlayer){
-            ((Button) view).setText("X"); //adds an x to the button
-        ((Button) view).setTextColor(getResources().getColor(R.color.blueYonder)); //changes the color of the x added to button
-            board[boardPointer] = 0; //updates which buttons are still on the board & 0 for player one
-    } else {
-            ((Button)view).setText("O"); //adds an o to the button
-            ((Button)view).setTextColor(getResources().getColor(R.color.ivory));//changes the color of the o added to the button
-
-            board[boardPointer] = 1; //updates which buttons are on the board & 1 for player two
-        }
-        roundCount++; //increases for check of tie
-
-        if(checkWinner())
+        /*
+          if(checkWinner())
         {
             if(activePlayer)
             {
@@ -145,7 +97,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         } else if (roundCount==9) //checks if it results in a tie
         {
             changeScreen("TIE :(");
-        } else {
+        } else
+        {
             activePlayer = !activePlayer;
             if(activePlayer)
             {
@@ -158,7 +111,105 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
                 playerOneDisplay.setTextColor(getResources().getColor(R.color.tangerine));
             }
         }
+         */
 
+    }//end MainActivity
+
+    public void onClickReset(View view)
+    {
+        resetGame();
+    }//end reset on click listener
+    @Override
+    public void onClick(View view) {
+
+        if (!((Button) view).getText().toString().equals("")) {//checks to make sure you are clicking an empty box
+            return;
+        }
+        String buttonID = view.getResources().getResourceEntryName(view.getId()); //gets the id for a button clicked
+        int boardPointer = Integer.parseInt(buttonID.substring(buttonID.length() - 1)); //gets rid of the button from the grid once clicked
+
+        if (activePlayer){
+            ((Button) view).setText("X"); //adds an x to the button
+        ((Button) view).setTextColor(getResources().getColor(R.color.blueYonder)); //changes the color of the x added to button
+            board[boardPointer] = 0; //updates which buttons are still on the board & 0 for player one
+
+
+    } else {
+            ((Button)view).setText("O"); //adds an o to the button
+            ((Button)view).setTextColor(getResources().getColor(R.color.ivory));//changes the color of the o added to the button
+
+            board[boardPointer] = 1; //updates which buttons are on the board & 1 for player two
+        }
+        roundCount++; //increases for check of tie
+
+        TextView playerOneDisplay = (TextView)findViewById(R.id.playerOne);
+        TextView playerTwoDisplay = (TextView)findViewById(R.id.playerTwo);
+        if(activePlayer)
+        {
+            winOrSwitch(playerOneDisplay, playerTwoDisplay,  1);
+        }
+        else
+        {
+            winOrSwitch(playerTwoDisplay, playerOneDisplay,  2);
+        }
+
+
+
+    }//end on click
+    //getters and setters for testing
+    public static void setSinglePlayer(Boolean single) //can be tested once testing is figures out
+    {
+        singlePlayer = single;
+        System.out.println("single bool is" + singlePlayer);
+    }
+
+
+    public static int getPlayerOneScoreCount() {
+        return playerOneScoreCount;
+    }
+
+    public static void setPlayerOneScoreCount(int newPlayerOneScoreCount) {
+        playerOneScoreCount = newPlayerOneScoreCount;
+    }
+
+    public static int getPlayerTwoScoreCount() {
+        return playerTwoScoreCount;
+    }
+
+    public static void setPlayerTwoScoreCount(int newPlayerTwoScoreCount) {
+        playerTwoScoreCount = newPlayerTwoScoreCount;
+    }
+
+    public void winOrSwitch(TextView display, TextView otherDisplay, int player)
+    {
+        //checks if someone has won, then updates
+        if(checkWinner())
+        {
+            if(player == 1)
+            {
+                playerOneScoreCount++;
+            }
+            else
+            {
+                playerTwoScoreCount++;
+            }
+            updatePlayerScore();
+            changeScreen("Player " + player + " WINS!");
+        } else if (roundCount==9) //checks if it results in a tie
+        {
+            changeScreen("TIE :(");
+        } else
+        {
+            //switches which player + color display
+
+                activePlayer = !activePlayer;
+                if(singlePlayer && activePlayer == false)
+                {
+                    placeCpu();
+                }
+                display.setTextColor(getResources().getColor(R.color.ivory));
+                otherDisplay.setTextColor(getResources().getColor(R.color.tangerine));
+        }
     }
     public boolean checkWinner()
     {
@@ -172,14 +223,49 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
             {
                 winnerResult = true; //if the conditions are met, then it sets the winner to true
             }
+            else if((board[winningPosition[0]] == board[winningPosition[1]])
+                            && board[winningPosition[0]] != 2)
+            {
+                togetherTeam = board[winningPosition[0]];
+                placement = board[winningPosition[2]];
+                twoInRow = true;
+            }
+            else if((board[winningPosition[1]] == board[winningPosition[2]] )
+                    && board[winningPosition[0]] != 2)
+            {
+                togetherTeam = board[winningPosition[1]];
+                placement = board[winningPosition[0]];
+                twoInRow = true;
+            }
+            else if((board[winningPosition[0]] == board[winningPosition[2]] )
+                    && board[winningPosition[0]] != 2)
+            {
+                togetherTeam = board[winningPosition[0]];
+                placement = board[winningPosition[1]];
+                twoInRow = true;
+            }
         }
         return winnerResult;//returns the boolean
     }
 
-    public void updatePlayerScore()
+    public int getPlacement()
+    {
+        return placement;
+    }
+
+    public static void updatePlayerScore()
     {
         playerOneScore.setText(Integer.toString(playerOneScoreCount));
         playerTwoScore.setText(Integer.toString(playerTwoScoreCount));
+    }
+
+    public static String getPlayerOneScoreText()
+    {
+        return (String)playerOneScore.getText();
+    }
+    public static String getPlayerTwoScoreText()
+    {
+        return (String)playerTwoScore.getText();
     }
 
     public void changeScreen(String str)//changes screen after player wins
@@ -211,7 +297,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
                 .setNegativeButton("Reset Scores",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                resetScores();
+                                resetGame();
                                 dialog.cancel();
                             }
                         });
@@ -224,6 +310,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
 
     public void playAgain()
     {
+        activePlayer = true;
         for(int i = 0; i < btns.length; i++)
         {
             btns[i].setText("");
@@ -232,12 +319,83 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         roundCount = 0;
     }//end playAgain
 
-    public void resetScores()
+    public void resetGame()
     {
+        //playAgain();
+        reset();
+        updatePlayerScore();
         playAgain();
+    }//end reset scores
+
+    public static void reset() {
         playerOneScoreCount = 0;
         playerTwoScoreCount = 0;
-        updatePlayerScore();
-    }//end reset scores
+    }
+
+    //place cpu method, to  attempt to figure out the best placement to win against opponent
+    public void placeCpu()
+    {
+        boolean placed = false;
+        int place = (int)(Math.random()*10 - 1);
+        if(board[placement] !=2)
+        {
+            twoInRow = false;
+        }
+        while(!placed)
+        {
+            if(twoInRow)
+            {
+
+                place = placement;
+                btns[place].performClick();
+                placed = true;
+                twoInRow = false;
+            }
+            else if(board[place] == 2)
+            {
+                btns[place].performClick();
+               // board[place] = 1;
+                placed = true;
+            }
+            else
+            {
+                place = (int)(Math.random()*10 - 1);
+            }
+        }
+
+//        int place = -1;
+//        int together = checkSpotsTogether();
+//        int avalible[] = {9};
+//        int count = 0;
+//        boolean stop = false;
+//        if(together == 2 && togetherTeam == 0 && !cpu) {
+//            place = getPlacement();
+//        }
+//        else
+//        {
+//            for(int i = 0; i < board.length; i++)
+//            {
+//                if(board[i] == 2)
+//                {
+//                    avalible[count] = board[i];
+//                    count++;
+//                }
+//            }
+//            count = 0;
+//            while(!stop)
+//            {
+//                place = board[count];
+//                count++;
+//                if(Math.random()*10 > 7 && board[count] != 0)
+//                {
+//                    stop = true;
+//                }
+//            }
+//        }
+//        activePlayer = false;
+//        btns[place].performClick();
+  }
+
+
 
 }
