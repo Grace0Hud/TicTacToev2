@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
     private Button resetGame;
     //array list btn
     private Button[] btns = new Button[9];
-    private int playerOneScoreCount, playerTwoScoreCount, roundCount;
+    public int playerOneScoreCount, playerTwoScoreCount, roundCount;
     boolean activePlayer;
 
     int[] board = {2, 2, 2, 2, 2, 2, 2, 2, 2}; //makes the board set
