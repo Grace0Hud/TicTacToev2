@@ -4,28 +4,19 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements OnClickListener {
-    private TextView playerOneScore, playerTwoScore, playerStatus;
+    private static TextView playerOneScore, playerTwoScore, playerStatus;
     private Button resetGame;
     //array list btn
     private Button[] btns = new Button[9];
-    private int playerOneScoreCount, playerTwoScoreCount, roundCount, togetherTeam, placement;
+    private static int playerOneScoreCount, playerTwoScoreCount, roundCount, togetherTeam, placement;
     boolean activePlayer, twoInRow, cpu;//true = x; false = o
     static boolean singlePlayer;
 
@@ -59,8 +50,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         }
 
         roundCount = 0;
-        playerOneScoreCount = 0;
-        playerTwoScoreCount = 0;
+        reset();
         activePlayer = true; //changes on which player is going
         singlePlayer = getIntent().getBooleanExtra("singlePlayer", false);
 
@@ -127,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
 
     public void onClickReset(View view)
     {
-        resetScores();
+        resetGame();
     }//end reset on click listener
     @Override
     public void onClick(View view) {
@@ -174,27 +164,20 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
     }
 
 
-    public int getPlayerOneScoreCount() {
+    public static int getPlayerOneScoreCount() {
         return playerOneScoreCount;
     }
 
-    public void setPlayerOneScoreCount(int playerOneScoreCount) {
-        this.playerOneScoreCount = playerOneScoreCount;
-    }
-    public void setTogetherTeam(int togetherTeam) {
-        this.togetherTeam = togetherTeam;
-    }
-    public int getTogetherTeam()
-    {
-        return togetherTeam;
+    public static void setPlayerOneScoreCount(int newPlayerOneScoreCount) {
+        playerOneScoreCount = newPlayerOneScoreCount;
     }
 
-    public int getPlayerTwoScoreCount() {
+    public static int getPlayerTwoScoreCount() {
         return playerTwoScoreCount;
     }
 
-    public void setPlayerTwoScoreCount(int playerTwoScoreCount) {
-        this.playerTwoScoreCount = playerTwoScoreCount;
+    public static void setPlayerTwoScoreCount(int newPlayerTwoScoreCount) {
+        playerTwoScoreCount = newPlayerTwoScoreCount;
     }
 
     public void winOrSwitch(TextView display, TextView otherDisplay, int player)
@@ -270,10 +253,19 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         return placement;
     }
 
-    public void updatePlayerScore()
+    public static void updatePlayerScore()
     {
         playerOneScore.setText(Integer.toString(playerOneScoreCount));
         playerTwoScore.setText(Integer.toString(playerTwoScoreCount));
+    }
+
+    public static String getPlayerOneScoreText()
+    {
+        return (String)playerOneScore.getText();
+    }
+    public static String getPlayerTwoScoreText()
+    {
+        return (String)playerTwoScore.getText();
     }
 
     public void changeScreen(String str)//changes screen after player wins
@@ -305,7 +297,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
                 .setNegativeButton("Reset Scores",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                resetScores();
+                                resetGame();
                                 dialog.cancel();
                             }
                         });
@@ -327,14 +319,19 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         roundCount = 0;
     }//end playAgain
 
-    public void resetScores()
+    public void resetGame()
     {
         //playAgain();
-        playerOneScoreCount = 0;
-        playerTwoScoreCount = 0;
+        reset();
         updatePlayerScore();
         playAgain();
     }//end reset scores
+
+    public static void reset() {
+        playerOneScoreCount = 0;
+        playerTwoScoreCount = 0;
+    }
+
     //place cpu method, to  attempt to figure out the best placement to win against opponent
     public void placeCpu()
     {

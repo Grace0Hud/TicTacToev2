@@ -2,44 +2,48 @@ package com.example.tictactoe;
 
 import android.os.Looper;
 
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+
 import junit.framework.TestCase;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+@RunWith(AndroidJUnit4.class)
 
 public class MainActivityTest extends TestCase {
 
-    public void testOnCreate()
+    @Test
+    public void playerOneCountGetnSet()
     {
-
+        MainActivity.setPlayerOneScoreCount(4);
+       int expected = 4;
+       assertEquals(expected,  MainActivity.getPlayerOneScoreCount());
+    }
+    @Test
+    public void playerTwoCountGetnSet()
+    {
+        MainActivity.setPlayerTwoScoreCount(4);
+        int expected = 4;
+        assertEquals(expected, MainActivity.getPlayerTwoScoreCount());
     }
 
-    public void testResetScores()//had to comment out playAgain() function inside
+    @Test
+    public void resetPlayerOneScore()
     {
-        Looper.prepare();
-        MainActivity reset = new MainActivity();
-        reset.setPlayerOneScoreCount(4);
-        reset.resetScores();
-        String equals = "0";
-        assertEquals(equals, reset.getPlayerOneScoreCount());
-
+       MainActivity.setPlayerOneScoreCount(4);
+       int expected = 0;
+       MainActivity.reset();
+       assertEquals(expected, MainActivity.getPlayerOneScoreCount());
     }
 
-    public void testOnClick()
+    @Test
+    public void resetPlayerTwoScore()
     {
-    }
-
-    public void testCheckWinner()
-    {
-    }
-
-    public void testUpdatePlayerScore()
-    {
-    }
-
-    public void testChangeScreen()
-    {
-    }
-
-    public void testPlayAgain()
-    {
+        MainActivity.setPlayerTwoScoreCount(4);
+        int expected = 0;
+        MainActivity.reset();
+        assertEquals(expected, MainActivity.getPlayerTwoScoreCount());
     }
 
 
