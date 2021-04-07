@@ -17,18 +17,18 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
     //array list btn
     private Button[] btns = new Button[9];
     private static int playerOneScoreCount, playerTwoScoreCount, roundCount, togetherTeam, placement;
-    boolean activePlayer, twoInRow, cpu;//true = x; false = o
+    static boolean activePlayer, twoInRow, cpu;//true = x; false = o
     static boolean singlePlayer;
 
 
-    int[] board = {2, 2, 2, 2, 2, 2, 2, 2, 2}; //makes the board set; 0 for player one & 1 for player two
+    static int[] board = {2, 2, 2, 2, 2, 2, 2, 2, 2}; //makes the board set; 0 for player one & 1 for player two
 
-    int[][] winningPositions = { //shows all winning positions on the grid
+    static int[][] winningPositions = { //shows all winning positions on the grid
             {0, 1, 2}, {3, 4, 5,}, {6, 7, 8}, //rows
             {0, 3, 6}, {1, 4, 7}, {2, 5, 8}, //columns
             {0, 4, 8}, {2, 4, 6} //diagonal
     };
-    int winningScore = 1 ;  //score needed for a player to win (should be changed later, it is set to 1 as a test case)
+    static int winningScore = 1 ;  //score needed for a player to win (should be changed later, it is set to 1 as a test case)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -267,6 +267,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
     {
         return (String)playerTwoScore.getText();
     }
+
 
     public void changeScreen(String str)//changes screen after player wins
     {

@@ -1,6 +1,5 @@
 package com.example.tictactoe;
 
-import android.os.Looper;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
@@ -8,6 +7,8 @@ import junit.framework.TestCase;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import static org.junit.Assert.assertArrayEquals;
 
 @RunWith(AndroidJUnit4.class)
 
@@ -46,5 +47,21 @@ public class MainActivityTest extends TestCase {
         assertEquals(expected, MainActivity.getPlayerTwoScoreCount());
     }
 
+    @Test
+    public void updatePlayerOneScore()
+    {
+        MainActivity.setPlayerOneScoreCount(1);
+        int expected = 1;
+        MainActivity.getPlayerOneScoreCount();
+        assertEquals(expected, MainActivity.getPlayerOneScoreCount());
+    }
 
+    @Test
+    public void updatePlayerTwoScore()
+    {
+        MainActivity.setPlayerTwoScoreCount(1);
+        int expected = 1;
+        MainActivity.getPlayerTwoScoreCount();
+        assertEquals(expected, MainActivity.getPlayerTwoScoreCount());
+    }
 }
